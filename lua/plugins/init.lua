@@ -1,0 +1,20 @@
+return {
+	{
+		"Civitasv/cmake-tools.nvim",
+		opts = { cmake_build_directory = "build" },
+		cmake_soft_link_compile_commands = false,
+		cmake_compile_commands_from_lsp = true,
+	},
+	"ThePrimeagen/vim-be-good",
+	require("plugins/oil"),
+	require("plugins/harpoon"),
+	require("plugins/gitsigns"),
+	require("plugins/which-key"),
+	require("plugins/telescope"),
+	require("plugins/nvim-lspconfig"),
+	require("plugins/conform"),
+	require("plugins/nvim-cmp"),
+	require("plugins/theme"),
+	require("plugins/mini"),
+	require("plugins/nvim-treesitter"),
+}
