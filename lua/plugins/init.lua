@@ -5,6 +5,7 @@ return {
 		cmake_soft_link_compile_commands = false,
 		cmake_compile_commands_from_lsp = true,
 	},
+	{ "ej-shafran/compile-mode.nvim", dependencies = { "m00qek/baleia.nvim" }, opts = { default_command = "" } },
 	"ThePrimeagen/vim-be-good",
 	require("plugins/oil"),
 	require("plugins/harpoon"),
@@ -17,4 +18,5 @@ return {
 	require("plugins/theme"),
 	require("plugins/mini"),
 	require("plugins/nvim-treesitter"),
+	require("plugins/dap"),
 }

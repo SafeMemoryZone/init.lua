@@ -11,6 +11,7 @@ vim.keymap.set("n", "<leader>v", "<cmd>VimBeGood<cr>")
 vim.keymap.set("n", "<leader>mc", "<cmd>CMakeBuild<cr>")
 vim.keymap.set("n", "<leader>mr", "<cmd>CMakeRun<cr>")
 vim.keymap.set("n", "<leader>ms", "<cmd>CMakeTargetSettings<cr>")
+vim.keymap.set("n", "<leader>pc", "<cmd>Compile<cr>")
 
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 

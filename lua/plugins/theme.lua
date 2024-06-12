@@ -1,8 +1,8 @@
 return {
-	"rose-pine/neovim",
-	name = "rose-pine",
+	"blazkowolf/gruber-darker.nvim",
+	lazy = false,
 	priority = 1000,
-	init = function()
-		vim.cmd("colorscheme rose-pine-moon")
+	config = function()
+		vim.cmd.colorscheme("gruber-darker")
 	end,
 }
