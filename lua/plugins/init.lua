@@ -1,12 +1,7 @@
 return {
-	{
-		"Civitasv/cmake-tools.nvim",
-		opts = { cmake_build_directory = "build" },
-		cmake_soft_link_compile_commands = false,
-		cmake_compile_commands_from_lsp = true,
-	},
-	{ "ej-shafran/compile-mode.nvim", dependencies = { "m00qek/baleia.nvim" }, opts = { default_command = "" } },
 	"ThePrimeagen/vim-be-good",
+	require("plugins/compile-mode"),
+	require("plugins/cmake"),
 	require("plugins/oil"),
 	require("plugins/harpoon"),
 	require("plugins/gitsigns"),

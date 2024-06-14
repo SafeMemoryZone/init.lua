@@ -8,10 +8,6 @@ vim.keymap.set("n", "<C-f>", "<C-f>zz", { remap = false })
 vim.keymap.set("n", "<C-b>", "<C-b>zz", { remap = false })
 
 vim.keymap.set("n", "<leader>v", "<cmd>VimBeGood<cr>")
-vim.keymap.set("n", "<leader>mc", "<cmd>CMakeBuild<cr>")
-vim.keymap.set("n", "<leader>mr", "<cmd>CMakeRun<cr>")
-vim.keymap.set("n", "<leader>ms", "<cmd>CMakeTargetSettings<cr>")
-vim.keymap.set("n", "<leader>pc", "<cmd>Compile<cr>")
 
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
