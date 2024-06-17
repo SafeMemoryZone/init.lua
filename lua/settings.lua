@@ -25,3 +25,5 @@ vim.opt.splitbelow = true
 vim.opt.inccommand = "split"
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
+-- Disable end-of-buffer tildes
+vim.opt.fillchars:append { eob = ' ' }

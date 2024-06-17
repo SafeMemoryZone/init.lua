@@ -2,6 +2,7 @@ return {
 	"mfussenegger/nvim-dap",
 	dependencies = {
 		{ "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" } },
+		{ "jay-babu/mason-nvim-dap.nvim", opts = { ensure_installed = { "codelldb" } } },
 	},
 	init = function()
 		local dap = require("dap")
@@ -22,13 +23,19 @@ return {
 		end
 
 		dap.adapters.lldb = {
-			type = "executable",
-			command = "lldb",
-			name = "lldb",
+      name = "Launch",
+			type = "server",
+			command = vim.fn.stdpath("data") .. "/mason/bin/codelldb",
+			port = "2000",
 		}
+
+		vim.keymap.set("n", "<Leader>dt", dap.toggle_breakpoint, {})
+		vim.keymap.set("n", "<Leader>dc", dap.continue, {})
+		vim.keymap.set("n", "<C-n>", dap.step_over, {})
+		vim.keymap.set("n", "<C-i>", dap.step_into, {})
+
 		dap.configurations.cpp = {
 			{
-				name = "Launch",
 				type = "lldb",
 				request = "launch",
 				program = function()
@@ -40,9 +47,5 @@ return {
 			},
 		}
 		dap.configurations.c = dap.configurations.cpp
-		vim.keymap.set("n", "<Leader>dt", dap.toggle_breakpoint, {})
-		vim.keymap.set("n", "<Leader>dc", dap.continue, {})
-		vim.keymap.set("n", "<C-n>", dap.step_over, {})
-		vim.keymap.set("n", "<C-i>", dap.step_into, {})
 	end,
 }
