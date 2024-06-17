@@ -54,6 +54,7 @@ return {
 		},
 	},
 	require("plugins/lspconfig"),
+  require("plugins/cmp"),
 	require("plugins/dap"),
 	require("plugins/none-ls"),
 	require("plugins/treesitter"),
@@ -90,6 +91,7 @@ return {
 		end,
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
+  {"vim-utils/vim-man"},
 	{
 		"ThePrimeagen/harpoon",
 		dependencies = {
