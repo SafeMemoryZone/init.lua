@@ -22,9 +22,9 @@ return {
 		name = "onedark",
 		lazy = false,
 		priority = 1000,
-    opts = {
-      style = "darker"
-    },
+		opts = {
+			style = "darker",
+		},
 		init = function()
 			vim.cmd("colorscheme onedark")
 		end,
@@ -32,9 +32,9 @@ return {
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {
-      theme = "onedark"
-    }
+		opts = {
+			theme = "onedark",
+		},
 	},
 	{
 		"williamboman/mason.nvim",
@@ -54,16 +54,18 @@ return {
 		},
 	},
 	require("plugins/lspconfig"),
-  require("plugins/cmp"),
+	require("plugins/cmp"),
 	require("plugins/dap"),
 	require("plugins/none-ls"),
 	require("plugins/treesitter"),
 	require("plugins/telescope"),
 	{
 		"Civitasv/cmake-tools.nvim",
-		opts = { cmake_build_directory = "build" },
-		cmake_soft_link_compile_commands = false,
-		cmake_compile_commands_from_lsp = true,
+		opts = {
+			cmake_build_directory = "build",
+			cmake_soft_link_compile_commands = false,
+			cmake_compile_commands_from_lsp = true,
+		},
 		init = function()
 			vim.keymap.set("n", "<leader>mc", "<cmd>CMakeBuild<cr>")
 			vim.keymap.set("n", "<leader>mr", "<cmd>CMakeRun<cr>")
@@ -91,7 +93,7 @@ return {
 		end,
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
-  {"vim-utils/vim-man"},
+	{ "vim-utils/vim-man" },
 	{
 		"ThePrimeagen/harpoon",
 		dependencies = {
