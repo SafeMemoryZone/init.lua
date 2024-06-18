@@ -22,18 +22,14 @@ return {
 				["<C-Space>"] = cmp.mapping.complete(),
 				["<C-e>"] = cmp.mapping.abort(),
 				["<C-y>"] = cmp.mapping.confirm({ select = true }),
-				["<C-]>"] = cmp.mapping(function(fallback)
+				["<C-.>"] = cmp.mapping(function()
 					if luasnip.expand_or_jumpable() then
 						luasnip.expand_or_jump()
-					else
-						fallback()
 					end
 				end, { "i", "s" }),
-				["<C-[>"] = cmp.mapping(function(fallback)
+				["<C-,>"] = cmp.mapping(function()
 					if luasnip.jumpable(-1) then
 						luasnip.jump(-1)
-					else
-						fallback()
 					end
 				end, { "i", "s" }),
 			}),
@@ -43,6 +39,7 @@ return {
 			},
 			sources = cmp.config.sources({
 				{ name = "nvim_lsp", max_item_count = 5 },
+				{ name = "luasnip", max_item_count = 5 },
 			}, {
 				{ name = "buffer", max_item_count = 5 },
 			}),
