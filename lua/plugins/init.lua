@@ -59,6 +59,7 @@ return {
         "lua_ls",
         "clangd",
         "zls",
+        "pyright",
       },
     },
   },
