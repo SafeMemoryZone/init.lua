@@ -1,14 +1,17 @@
 return {
 	"neovim/nvim-lspconfig",
-  dependencies = {"hrsh7th/cmp-nvim-lsp"},
+	dependencies = { "hrsh7th/cmp-nvim-lsp" },
 	config = function()
 		local lspconfig = require("lspconfig")
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
+		local capabilities = require("cmp_nvim_lsp").default_capabilities()
+		capabilities.offsetEncoding = { "utf-16" }
 
-		lspconfig.lua_ls.setup({capabilities = capabilities})
-		lspconfig.clangd.setup({capabilities = capabilities})
-		lspconfig.zls.setup({capabilities = capabilities})
-		lspconfig.pyright.setup({capabilities = capabilities})
+		lspconfig.lua_ls.setup({ capabilities = capabilities })
+		lspconfig.clangd.setup({ capabilities = capabilities })
+		lspconfig.zls.setup({ capabilities = capabilities })
+		lspconfig.pyright.setup({ capabilities = capabilities })
+		lspconfig.html.setup({ capabilities = capabilities })
+		lspconfig.cssls.setup({ capabilities = capabilities })
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			callback = function(event)

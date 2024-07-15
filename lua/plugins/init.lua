@@ -18,32 +18,36 @@ return {
     end,
   },
   {
-    "navarasu/onedark.nvim",
-    name = "onedark",
+    "metalelf0/jellybeans-nvim",
     lazy = false,
-    priority = 1000,
-    opts = {
-      style = "darker",
+    dependencies = {
+      "rktjmp/lush.nvim",
     },
-    init = function()
-      vim.cmd("colorscheme onedark")
+    priority = 1000,
+    config = function()
+      vim.cmd("colorscheme jellybeans-nvim")
     end,
   },
   {
-    'folke/todo-comments.nvim',
-    event = 'VimEnter',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    "folke/todo-comments.nvim",
+    event = "VimEnter",
+    dependencies = { "nvim-lua/plenary.nvim" },
     opts = { signs = false },
     init = function()
       vim.keymap.set("n", "<leader>tt", "<cmd>TodoTelescope<cr>")
-    end
+    end,
   },
   {
-    "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    opts = {
-      theme = "onedark",
-    },
+    "ojroques/nvim-hardline",
+    config = function()
+      require("hardline").setup({
+        theme = "gruvbox",
+        sections = {
+          { class = "mode", item = require("hardline.parts.mode").get_item },
+          { class = "med",  item = require("hardline.parts.filename").get_item },
+        },
+      })
+    end,
   },
   {
     "williamboman/mason.nvim",
@@ -60,12 +64,13 @@ return {
         "clangd",
         "zls",
         "pyright",
+        "html",
+        "cssls",
       },
     },
   },
   require("plugins/lspconfig"),
   require("plugins/cmp"),
-  require("plugins/dap"),
   require("plugins/none-ls"),
   require("plugins/treesitter"),
   require("plugins/telescope"),
