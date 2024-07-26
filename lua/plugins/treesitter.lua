@@ -1,18 +1,21 @@
 return {
-	"nvim-treesitter/nvim-treesitter",
-	build = ":TSUpdate",
+  "nvim-treesitter/nvim-treesitter",
+  build = ":TSUpdate",
   dependencies = {
     {
-      "nvim-treesitter/nvim-treesitter-context"
-    }
+      "nvim-treesitter/nvim-treesitter-context",
+      opts = {
+        separator = "-",
+      },
+    },
   },
-	config = function()
-		require("nvim-treesitter.install").prefer_git = true
-		require("nvim-treesitter.configs").setup({
-		auto_install = true,
-		highlight = {
-			enable = true,
-		},
-	})
-	end,
+  config = function()
+    require("nvim-treesitter.install").prefer_git = true
+    require("nvim-treesitter.configs").setup({
+      auto_install = true,
+      highlight = {
+        enable = true,
+      },
+    })
+  end,
 }
