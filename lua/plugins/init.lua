@@ -18,14 +18,12 @@ return {
 		end,
 	},
 	{
-		"metalelf0/jellybeans-nvim",
+		"folke/tokyonight.nvim",
 		lazy = false,
-		dependencies = {
-			"rktjmp/lush.nvim",
-		},
 		priority = 1000,
-		config = function()
-			vim.cmd("colorscheme jellybeans-nvim")
+		opts = {},
+		init = function()
+			vim.cmd("colorscheme tokyonight")
 		end,
 	},
 	{
@@ -53,7 +51,7 @@ return {
 		"ojroques/nvim-hardline",
 		config = function()
 			require("hardline").setup({
-				theme = "gruvbox",
+				theme = "nordic",
 				sections = {
 					{ class = "mode", item = require("hardline.parts.mode").get_item },
 					{ class = "med", item = require("hardline.parts.filename").get_item },
@@ -80,7 +78,7 @@ return {
 				"cssls",
 				"denols",
 				"intelephense",
-        "cmake"
+				"cmake",
 			},
 		},
 	},
@@ -130,7 +128,7 @@ return {
 			"nvim-lua/plenary.nvim",
 		},
 		init = function()
-			vim.keymap.set("n", "<C-x>", require("harpoon.mark").add_file, { desc = "[M]ark file" })
+			vim.keymap.set("n", "<leader>mm", require("harpoon.mark").add_file, { desc = "[M]ark file" })
 			vim.keymap.set("n", "<C-m>", require("harpoon.ui").toggle_quick_menu, { desc = "Toggle quick [M]enu" })
 			vim.keymap.set("n", "<C-1>", function()
 				require("harpoon.ui").nav_file(1)
@@ -141,6 +139,12 @@ return {
 			vim.keymap.set("n", "<C-3>", function()
 				require("harpoon.ui").nav_file(3)
 			end, { desc = { "Navigate to file 3" } })
+			vim.keymap.set("n", "<C-4>", function()
+				require("harpoon.ui").nav_file(3)
+			end, { desc = { "Navigate to file 4" } })
+			vim.keymap.set("n", "<C-5>", function()
+				require("harpoon.ui").nav_file(3)
+			end, { desc = { "Navigate to file 5" } })
 		end,
 	},
 	{
