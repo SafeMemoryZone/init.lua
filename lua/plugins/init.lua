@@ -21,8 +21,13 @@ return {
 		"folke/tokyonight.nvim",
 		lazy = false,
 		priority = 1000,
-		opts = {},
-		init = function()
+		config = function()
+			require("tokyonight").setup({
+        transparent = true,
+				styles = {
+					comments = { bold = true },
+				},
+			})
 			vim.cmd("colorscheme tokyonight")
 		end,
 	},
