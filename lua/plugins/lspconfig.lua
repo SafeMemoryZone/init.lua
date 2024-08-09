@@ -12,8 +12,8 @@ return {
 		lspconfig.pyright.setup({ capabilities = capabilities })
 		lspconfig.html.setup({ capabilities = capabilities })
 		lspconfig.cssls.setup({ capabilities = capabilities })
-		lspconfig.denols.setup({ capabilities = capabilities })
-		lspconfig.intelephense.setup({ capabilities = capabilities })
+		lspconfig.quick_lint_js.setup({ capabilities = capabilities })
+		lspconfig.phpactor.setup({ capabilities = capabilities })
 		lspconfig.cmake.setup({ capabilities = capabilities })
 
 		vim.api.nvim_create_autocmd("LspAttach", {
