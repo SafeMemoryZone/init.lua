@@ -109,7 +109,6 @@ return {
 		},
 		config = function()
 			local cmp = require("cmp")
-			local luasnip = require("luasnip")
 			cmp.setup({
 				snippet = {
 					expand = function(args)
@@ -224,12 +223,6 @@ return {
 			{
 				skip_confirm_for_simple_edits = true,
 				prompt_save_on_select_new_entry = false,
-				{
-					keymaps = {
-						["<C-v>"] = "actions.select_vsplit",
-						["<C-s>"] = "actions.select_split",
-					},
-				},
 			},
 		},
 		init = function()
@@ -239,7 +232,6 @@ return {
 		end,
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
-	{ "vim-utils/vim-man" },
 	{
 		"ThePrimeagen/harpoon",
 		dependencies = {
@@ -256,4 +248,5 @@ return {
 		end,
 	},
 	{ "tpope/vim-sleuth" },
+	{ "vim-utils/vim-man" },
 }
