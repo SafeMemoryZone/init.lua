@@ -38,7 +38,7 @@ return {
 				theme = "nordic",
 				sections = {
 					{ class = "mode", item = require("hardline.parts.mode").get_item },
-					{ class = "med",  item = require("hardline.parts.filename").get_item },
+					{ class = "med", item = require("hardline.parts.filename").get_item },
 				},
 			})
 		end,
@@ -200,7 +200,9 @@ return {
 			local builtin = require("telescope.builtin")
 			vim.keymap.set("n", "<leader>f", builtin.find_files)
 			vim.keymap.set("n", "<leader>pf", builtin.git_files)
-			vim.keymap.set("n", "<leader>g", builtin.live_grep)
+			vim.keymap.set("n", "<leader>g", function()
+				builtin.grep_string({ search = vim.fn.input("grep: ") })
+			end)
 			vim.keymap.set("n", "<leader>tr", builtin.resume)
 
 			vim.keymap.set("n", "<leader>/", function()
