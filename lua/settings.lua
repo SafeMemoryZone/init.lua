@@ -1,4 +1,3 @@
-vim.g.have_nerd_font = true
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.tabstop = 2
@@ -25,4 +24,5 @@ vim.opt.splitbelow = true
 vim.opt.inccommand = "split"
 vim.opt.cursorline = true
 vim.opt.scrolloff = 10
+vim.opt.termguicolors = true;
 vim.opt.fillchars:append { eob = ' ' }

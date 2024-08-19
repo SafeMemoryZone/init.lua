@@ -1,4 +1,3 @@
--- TODO: surround and comment
 return {
 	{
 		"goolord/alpha-nvim",
@@ -22,12 +21,6 @@ return {
 		"folke/tokyonight.nvim",
 		lazy = false,
 		priority = 1000,
-		opts = {
-			transparent = true,
-			styles = {
-				comments = { bold = true },
-			},
-		},
 		init = function()
 			vim.cmd("colorscheme tokyonight")
 		end,
@@ -37,11 +30,7 @@ return {
 		event = "VimEnter",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = { signs = false },
-		init = function()
-			vim.keymap.set("n", "<leader>tt", "<cmd>TodoTelescope<cr>")
-		end,
 	},
-	{ "ThePrimeagen/vim-be-good" },
 	{
 		"ojroques/nvim-hardline",
 		config = function()
@@ -49,7 +38,7 @@ return {
 				theme = "nordic",
 				sections = {
 					{ class = "mode", item = require("hardline.parts.mode").get_item },
-					{ class = "med", item = require("hardline.parts.filename").get_item },
+					{ class = "med",  item = require("hardline.parts.filename").get_item },
 				},
 			})
 		end,
@@ -61,11 +50,26 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = { "hrsh7th/cmp-nvim-lsp" },
+		opts = {
+			ensure_installed = {
+				"lua_ls",
+				"clangd",
+				"zls",
+				"pyright",
+				"html",
+				"cssls",
+				"quick_lint_js",
+				"phpactor",
+				"cmake",
+			},
+		},
+	},
+	{
+		"neovim/nvim-lspconfig",
+		dependencies = { "hrsh7th/cmp-nvim-lsp", "nvim-telescope/telescope.nvim", "p00f/clangd_extensions.nvim" },
 		config = function()
 			local lspconfig = require("lspconfig")
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
-			capabilities.offsetEncoding = { "utf-16" }
 
 			lspconfig.lua_ls.setup({ capabilities = capabilities })
 			lspconfig.clangd.setup({ capabilities = capabilities })
@@ -79,19 +83,16 @@ return {
 
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function(event)
-					local map = function(keys, func, desc)
-						vim.keymap.set("n", keys, func, { buffer = event.buf, desc = "LSP: " .. desc })
+					local map = function(keys, func)
+						vim.keymap.set("n", keys, func, { buffer = event.buf })
 					end
 
-					map("K", vim.lsp.buf.hover, "Hover over symbol")
-					map("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-					map("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-					map("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
-					map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-					map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
-					map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-					map("<leader>a", vim.lsp.buf.code_action, "Code [A]ction")
-					map("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+					map("K", vim.lsp.buf.hover)
+					map("gd", require("telescope.builtin").lsp_definitions)
+					map("gr", require("telescope.builtin").lsp_references)
+					map("gI", require("telescope.builtin").lsp_implementations)
+					map("<leader>rn", vim.lsp.buf.rename)
+					map("<leader>a", vim.lsp.buf.code_action)
 				end,
 			})
 		end,
@@ -123,18 +124,19 @@ return {
 					documentation = cmp.config.window.bordered(),
 				},
 				sources = cmp.config.sources({
-					{ name = "nvim_lsp", max_item_count = 5 },
-					{ name = "luasnip", max_item_count = 5 },
-					{ name = "nvim_lua", max_item_count = 5 },
-					{ name = "treesitter", max_item_count = 5 },
+					{ name = "nvim_lsp" },
+					{ name = "luasnip" },
+					{ name = "nvim_lua" },
+					{ name = "treesitter" },
 				}, {
-					{ name = "buffer", max_item_count = 5 },
+					{ name = "buffer" },
 				}),
 			})
 		end,
 	},
 	{
 		"nvimtools/none-ls.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
 		config = function()
 			local null_ls = require("null-ls")
 			null_ls.setup({
@@ -143,7 +145,7 @@ return {
 					null_ls.builtins.formatting.clang_format,
 				},
 			})
-			vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format, { desc = "[F]ormat buffer" })
+			vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format)
 		end,
 	},
 	{
@@ -181,7 +183,7 @@ return {
 				end,
 			},
 			"nvim-telescope/telescope-ui-select.nvim",
-			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
+			{ "nvim-tree/nvim-web-devicons", enabled = true },
 		},
 		config = function()
 			require("telescope").setup({
@@ -196,54 +198,51 @@ return {
 			pcall(require("telescope").load_extension, "ui-select")
 
 			local builtin = require("telescope.builtin")
-			vim.keymap.set("n", "<leader>f", builtin.find_files, { desc = "[S]earch [F]iles" })
-			vim.keymap.set("n", "<leader>g", builtin.live_grep, { desc = "[S]earch by [G]rep" })
-			vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
-			vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
-			vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+			vim.keymap.set("n", "<leader>f", builtin.find_files)
+			vim.keymap.set("n", "<leader>pf", builtin.git_files)
+			vim.keymap.set("n", "<leader>g", builtin.live_grep)
+			vim.keymap.set("n", "<leader>tr", builtin.resume)
 
 			vim.keymap.set("n", "<leader>/", function()
 				builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
 					winblend = 10,
 					previewer = false,
 				}))
-			end, { desc = "[/] Fuzzily search in current buffer" })
+			end)
 
 			vim.keymap.set("n", "<leader>sn", function()
 				builtin.find_files({ cwd = vim.fn.stdpath("config") })
-			end, { desc = "[S]earch [N]eovim files" })
+			end)
 		end,
 	},
 	{
 		"stevearc/oil.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {
-			{
-				skip_confirm_for_simple_edits = true,
-				prompt_save_on_select_new_entry = false,
-			},
+			skip_confirm_for_simple_edits = true,
+			prompt_save_on_select_new_entry = false,
 		},
 		init = function()
 			vim.keymap.set("n", "<leader>pv", function()
 				require("oil").open(require("oil").get_curr_dir)
-			end, { desc = "Open current dir" })
+			end)
 		end,
-		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
 	{
 		"ThePrimeagen/harpoon",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
+		dependencies = { "nvim-lua/plenary.nvim" },
 		init = function()
-			vim.keymap.set("n", "<leader>mm", require("harpoon.mark").add_file, { desc = "[M]ark file" })
-			vim.keymap.set("n", "<C-m>", require("harpoon.ui").toggle_quick_menu, { desc = "Toggle quick [M]enu" })
+			vim.keymap.set("n", "<leader>x", require("harpoon.mark").add_file)
+			vim.keymap.set("n", "<leader>m", require("harpoon.ui").toggle_quick_menu)
 			for i = 1, 3 do
 				vim.keymap.set("n", string.format("<C-%d>", i), function()
 					require("harpoon.ui").nav_file(i)
-				end, { desc = { string.format("Navigate to file %d", i) } })
+				end)
 			end
 		end,
 	},
 	{ "tpope/vim-sleuth" },
 	{ "vim-utils/vim-man" },
+	{ "ThePrimeagen/vim-be-good" },
+	{ "tpope/vim-fugitive" },
 }
