@@ -66,7 +66,7 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = { "hrsh7th/cmp-nvim-lsp", "nvim-telescope/telescope.nvim", "p00f/clangd_extensions.nvim" },
+		dependencies = { "hrsh7th/cmp-nvim-lsp", "nvim-telescope/telescope.nvim" },
 		config = function()
 			local lspconfig = require("lspconfig")
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -203,7 +203,7 @@ return {
 			vim.keymap.set("n", "<leader>g", function()
 				builtin.grep_string({ search = vim.fn.input("grep: ") })
 			end)
-			vim.keymap.set("n", "<leader>tr", builtin.resume)
+			vim.keymap.set("n", "<leader>r", builtin.resume)
 
 			vim.keymap.set("n", "<leader>/", function()
 				builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
