@@ -22,7 +22,7 @@ return {
 		lazy = false,
 		priority = 1000,
 		init = function()
-			vim.cmd("colorscheme tokyonight")
+			vim.cmd("colorscheme tokyonight-storm")
 		end,
 	},
 	{
@@ -32,16 +32,9 @@ return {
 		opts = { signs = false },
 	},
 	{
-		"ojroques/nvim-hardline",
-		config = function()
-			require("hardline").setup({
-				theme = "nordic",
-				sections = {
-					{ class = "mode", item = require("hardline.parts.mode").get_item },
-					{ class = "med", item = require("hardline.parts.filename").get_item },
-				},
-			})
-		end,
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		opts = { options = { theme = "nightfly" } },
 	},
 	{
 		"williamboman/mason.nvim",
@@ -71,8 +64,8 @@ return {
 			local lspconfig = require("lspconfig")
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+			lspconfig.clangd.setup({ capabilities = capabilities, cmd = { "clangd", "--offset-encoding=utf-16" } })
 			lspconfig.lua_ls.setup({ capabilities = capabilities })
-			lspconfig.clangd.setup({ capabilities = capabilities })
 			lspconfig.zls.setup({ capabilities = capabilities })
 			lspconfig.pyright.setup({ capabilities = capabilities })
 			lspconfig.html.setup({ capabilities = capabilities })
@@ -200,10 +193,8 @@ return {
 			local builtin = require("telescope.builtin")
 			vim.keymap.set("n", "<leader>f", builtin.find_files)
 			vim.keymap.set("n", "<leader>pf", builtin.git_files)
-			vim.keymap.set("n", "<leader>g", function()
-				builtin.grep_string({ search = vim.fn.input("grep: ") })
-			end)
-			vim.keymap.set("n", "<leader>r", builtin.resume)
+			vim.keymap.set("n", "<leader>tr", builtin.resume)
+			vim.keymap.set("n", "<leader>g", builtin.live_grep)
 
 			vim.keymap.set("n", "<leader>/", function()
 				builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
@@ -242,6 +233,24 @@ return {
 				end)
 			end
 		end,
+	},
+	{
+		"christoomey/vim-tmux-navigator",
+		lazy = false,
+		cmd = {
+			"TmuxNavigateLeft",
+			"TmuxNavigateDown",
+			"TmuxNavigateUp",
+			"TmuxNavigateRight",
+			"TmuxNavigatePrevious",
+		},
+		keys = {
+			{ "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+			{ "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+			{ "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+			{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+		},
 	},
 	{ "tpope/vim-sleuth" },
 	{ "vim-utils/vim-man" },
