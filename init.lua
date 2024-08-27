@@ -6,13 +6,6 @@ if not vim.loop.fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
-vim.api.nvim_create_autocmd("VimEnter", {
-    command = "silent !tmux set status off"
-})
-vim.api.nvim_create_autocmd("VimLeave", {
-    command = "silent !tmux set status on"
-})
-
 require("settings")
 require("remap")
 require("lazy").setup(require("plugins"))
