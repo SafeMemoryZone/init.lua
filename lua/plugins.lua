@@ -228,7 +228,7 @@ return {
 			vim.keymap.set("n", "<leader>x", require("harpoon.mark").add_file)
 			vim.keymap.set("n", "<leader>m", require("harpoon.ui").toggle_quick_menu)
 			for i = 1, 3 do
-				vim.keymap.set("n", string.format("<C-%d>", i), function()
+				vim.keymap.set("n", string.format("<leader>%d", i), function()
 					require("harpoon.ui").nav_file(i)
 				end)
 			end
