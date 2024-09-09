@@ -54,6 +54,7 @@ return {
 				"quick_lint_js",
 				"phpactor",
 				"cmake",
+				"java_language_server",
 			},
 		},
 	},
@@ -64,7 +65,10 @@ return {
 			local lspconfig = require("lspconfig")
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			lspconfig.clangd.setup({ capabilities = capabilities, cmd = { "clangd", "--offset-encoding=utf-16" } })
+			lspconfig.clangd.setup({
+				capabilities = capabilities,
+				cmd = { "clangd", "--offset-encoding=utf-16" },
+			})
 			lspconfig.lua_ls.setup({ capabilities = capabilities })
 			lspconfig.zls.setup({ capabilities = capabilities })
 			lspconfig.pyright.setup({ capabilities = capabilities })
@@ -73,6 +77,7 @@ return {
 			lspconfig.quick_lint_js.setup({ capabilities = capabilities })
 			lspconfig.phpactor.setup({ capabilities = capabilities })
 			lspconfig.cmake.setup({ capabilities = capabilities })
+			lspconfig.java_language_server.setup({ capabilities = capabilities })
 
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function(event)
@@ -138,7 +143,6 @@ return {
 					null_ls.builtins.formatting.clang_format,
 				},
 			})
-			vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format)
 		end,
 	},
 	{
@@ -233,24 +237,6 @@ return {
 				end)
 			end
 		end,
-	},
-	{
-		"christoomey/vim-tmux-navigator",
-		lazy = false,
-		cmd = {
-			"TmuxNavigateLeft",
-			"TmuxNavigateDown",
-			"TmuxNavigateUp",
-			"TmuxNavigateRight",
-			"TmuxNavigatePrevious",
-		},
-		keys = {
-			{ "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-			{ "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-			{ "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-			{ "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-			{ "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
-		},
 	},
 	{ "tpope/vim-sleuth" },
 	{ "vim-utils/vim-man" },
