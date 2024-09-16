@@ -28,3 +28,4 @@ vim.opt.termguicolors = true
 vim.opt.fillchars:append { eob = ' ' }
 vim.opt.timeoutlen=2000
 vim.opt.ttimeoutlen=0
+vim.opt.termguicolors = true
