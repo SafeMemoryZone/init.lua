@@ -3,7 +3,7 @@ return {
 		"goolord/alpha-nvim",
 		config = function()
 			local alpha = require("alpha")
-			local dashboard = require("alpha.themes.startify")
+			local dashboard = require("alpha.themes.dashboard")
 			dashboard.section.header.val = {
 				"                                   ",
 				"                                   ",
@@ -21,6 +21,12 @@ return {
 				"       ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃     ",
 				"                                   ",
 			}
+
+			dashboard.section.buttons.val = {
+				dashboard.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
+				dashboard.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
+				dashboard.button("q", "󰅚  > Quit NVIM", ":qa<CR>"),
+			}
 			alpha.setup(dashboard.opts)
 		end,
 	},
@@ -34,13 +40,14 @@ return {
 	},
 	{
 		"folke/todo-comments.nvim",
-		event = "VimEnter",
+		event = { "BufReadPost" },
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = { signs = false },
 	},
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },
+		lazy = false,
 		opts = { options = { theme = "nightfly" } },
 	},
 	{
@@ -49,7 +56,9 @@ return {
 		config = true,
 	},
 	{
-		"neovim/nvim-lspconfig",
+		"williamboman/mason-lspconfig.nvim",
+		dependencies = { "williamboman/mason.nvim" },
+		event = { "BufReadPre", "BufNewFile" },
 		opts = {
 			ensure_installed = {
 				"lua_ls",
@@ -60,13 +69,23 @@ return {
 				"quick_lint_js",
 				"phpactor",
 				"cmake",
-				"pyright",
+				"ruff_lsp",
+			},
+		},
+	},
+	{
+		"jayp0521/mason-null-ls.nvim",
+		dependencies = { "williamboman/mason.nvim", "nvimtools/none-ls.nvim" },
+		event = { "BufReadPre", "BufNewFile" },
+		opts = {
+			ensure_installed = {
+				"black",
+				"ruff",
 			},
 		},
 	},
 	{
 		"nvim-telescope/telescope.nvim",
-		event = "VimEnter",
 		branch = "0.1.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
@@ -112,10 +131,16 @@ return {
 	},
 	{
 		"neovim/nvim-lspconfig",
-		dependencies = { "hrsh7th/cmp-nvim-lsp", "nvim-telescope/telescope.nvim" },
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"nvim-telescope/telescope.nvim",
+			"williamboman/mason-lspconfig.nvim",
+		},
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local lspconfig = require("lspconfig")
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			local capabilities = vim.lsp.protocol.make_client_capabilities()
+			capabilities = vim.tbl_deep_extend("force", capabilities, require("cmp_nvim_lsp").default_capabilities())
 
 			lspconfig.clangd.setup({
 				capabilities = capabilities,
@@ -128,6 +153,7 @@ return {
 			lspconfig.quick_lint_js.setup({ capabilities = capabilities })
 			lspconfig.phpactor.setup({ capabilities = capabilities })
 			lspconfig.cmake.setup({ capabilities = capabilities })
+			lspconfig.ruff_lsp.setup({ capabilities = capabilities })
 
 			vim.api.nvim_create_autocmd("LspAttach", {
 				callback = function(event)
@@ -141,6 +167,21 @@ return {
 					map("gI", require("telescope.builtin").lsp_implementations)
 					map("<leader>rn", vim.lsp.buf.rename)
 					map("<leader>a", vim.lsp.buf.code_action)
+
+					local highlight_augroup = vim.api.nvim_create_augroup("lsp-highlight", { clear = false })
+
+					vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+						buffer = event.buf,
+						group = highlight_augroup,
+						callback = vim.lsp.buf.clear_references,
+					})
+
+					vim.api.nvim_create_autocmd("LspDetach", {
+						callback = function(event2)
+							vim.lsp.buf.clear_references()
+							vim.api.nvim_clear_autocmds({ group = "lsp-highlight", buffer = event2.buf })
+						end,
+					})
 				end,
 			})
 		end,
@@ -156,6 +197,7 @@ return {
 			"hrsh7th/cmp-nvim-lua",
 			"ray-x/cmp-treesitter",
 		},
+		event = "InsertEnter",
 		config = function()
 			local cmp = require("cmp")
 			cmp.setup({
@@ -185,12 +227,14 @@ return {
 	{
 		"nvimtools/none-ls.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			local null_ls = require("null-ls")
 			null_ls.setup({
 				sources = {
 					null_ls.builtins.formatting.stylua,
 					null_ls.builtins.formatting.clang_format,
+					null_ls.builtins.formatting.black,
 				},
 			})
 		end,
@@ -221,8 +265,20 @@ return {
 			end
 		end,
 	},
-	{ "tpope/vim-sleuth" },
-	{ "vim-utils/vim-man" },
-	{ "ThePrimeagen/vim-be-good" },
-	{ "tpope/vim-fugitive" },
+	-- {
+	-- 	"tpope/vim-sleuth",
+	-- 	event = { "BufReadPre", "BufNewFile" },
+	-- },
+	{
+		"vim-utils/vim-man",
+	},
+	{
+		"ThePrimeagen/vim-be-good",
+	},
+	{
+		"tpope/vim-fugitive",
+	},
+	{
+		"tpope/vim-commentary",
+	},
 }
