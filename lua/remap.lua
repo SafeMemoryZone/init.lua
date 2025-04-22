@@ -6,7 +6,6 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz", { remap = false })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { remap = false })
 vim.keymap.set("n", "<C-f>", "<C-f>zz", { remap = false })
 vim.keymap.set("n", "<C-b>", "<C-b>zz", { remap = false })
-vim.keymap.set("n", "<leader>p", "\"_dp", { remap = false })
 vim.keymap.set("n", "<leader>bf", vim.lsp.buf.format)
 
 vim.keymap.set("n", "]b", ":bnext<CR>")
